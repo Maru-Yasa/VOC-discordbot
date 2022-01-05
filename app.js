@@ -1,3 +1,4 @@
+require('http').createServer((req, res) => res.end('Bot is alive!')).listen(3000)
 const config = require("./config.json");
 require('dotenv').config()
 const token = process.env.TOKEN
