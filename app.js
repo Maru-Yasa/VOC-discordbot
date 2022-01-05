@@ -1,5 +1,6 @@
 const config = require("./config.json");
-const token = require("./token.json");
+require('dotenv').config()
+const token = process.env.TOKEN
 const Discord = require("discord.js");
 const fs = require("fs");
 const bot = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS"] });
@@ -33,17 +34,19 @@ bot.on("message", async message => {
     //get prefix from config and prepare message so it can be read as a command
     let prefix = config.prefix;
     let messageArray = message.content.split(" ");
-    let cmd = messageArray[0];
-    let args = messageArray.slice(1);
+    let pfx = messageArray[0].toLowerCase()
+    let cmd = messageArray[1];
+    let args = messageArray.slice(2);
 
     //Check for prefix
-    if(!cmd.startsWith(config.prefix)) return;
+    if(!pfx.startsWith(config.prefix)) return;
 
     //Get the command from the commands collection and then if the command is found run the command file
-    let commandfile = bot.commands.get(cmd.slice(prefix.length));
+    console.log(cmd, args)
+    let commandfile = bot.commands.get(cmd);
     if(commandfile) commandfile.run(bot,message,args);
 
 });
 
-//Token needed in token.json
-bot.login(token.token);
+//Token needed in .env
+bot.login(token);
