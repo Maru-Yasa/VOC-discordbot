@@ -5,12 +5,12 @@ async function guildMemberAdd(member, bot) {
     console.log('User ' + member.user.tag + ' has joined the server!');
 
     //Find a channel named welcome and send a Welcome message
-    const embed = await sendEmbedWelcome(bot,member)
-    const embed2 = await sendEmbedWelcome2(bot,member)
+    const newEmbed = await sendEmbedWelcome(bot,member)
+    const newEmbed2 = await sendEmbedWelcome2(bot,member)
     bot.channels.cache.find(c => c.id === "834302027105435689").send("<@" + member.user.id + ">")
-    bot.channels.cache.find(c => c.id === "834302027105435689").send({embeds:[embed2]})
+    bot.channels.cache.find(c => c.id === "834302027105435689").send({embed:newEmbed2})
     bot.channels.cache.find(c => c.id === "728580912790372365").send("<@" + member.user.id + ">")
-    bot.channels.cache.find(c => c.id === "728580912790372365").send({embeds:[embed]})
+    bot.channels.cache.find(c => c.id === "728580912790372365").send({embed:newEmbed})
 }
 
 module.exports = {

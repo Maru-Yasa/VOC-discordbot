@@ -91,7 +91,7 @@ VOC's Channels
 
     sendEmbedError : (msg, error) => { 
         let desc = `
-Please contact <@${roles.admin}>
+Please contact <@&${roles.admin}>
 Errors : ${error}
 `
         const embed = new MessageEmbed()
@@ -107,7 +107,6 @@ Errors : ${error}
     sendEmbedText : (msg, text) => { 
         const embed = new MessageEmbed()
             .setColor(color.primary)
-            .setImage(gif.garis)
             .setDescription(text)
             .setFooter("Virtual On Comunity | " + getTime())
         return embed

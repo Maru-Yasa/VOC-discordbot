@@ -11,12 +11,12 @@ module.exports.run = async (bot, message, args) => {
         let userAvatarUrl = await bot.users.fetch(user.id).then(user => {
             return user.avatarURL()
         })
-        const embed = await sendEmbedPict(message,userAvatarUrl)
-        message.channel.send({embeds:[embed]})
+        const newEmbed = await sendEmbedPict(message,userAvatarUrl)
+        message.channel.send({embed:newEmbed})
 
     } catch (error) {
         const error_embed = await sendEmbedError(message,error)
-        message.channel.send({embeds:[error_embed]})
+        message.channel.send({embed:error_embed})
         throw error
     }
 }
