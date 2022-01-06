@@ -1,25 +1,43 @@
 const { MessageEmbed } = require('discord.js');
-const primary = "#0099ff"
+
 const color = {
     primary : "#0099ff",
     danger : "#ff4c4c"
 }
 
+const roles = {
+    admin : "728761025339457546"
+}
+
+const gif = {
+    garis : "https://cdn.discordapp.com/attachments/838318045532258314/905832038072983552/2.gif"
+}
+
+function getTime() {
+  var d = new Date();
+  var s = d.getSeconds();
+  var m = d.getMinutes();
+  var h = d.getHours();
+  return h + ":" + m + ":" + s;
+}
+
+
 module.exports = {
     isAdmin : (msg) => {
-        const adminRole = "728761025339457546"
+        const adminRole = roles.admin
         if (msg.member.roles.cache.has(adminRole)){
             return true
         }else{
             return false
         }
     },
-    sendEmbedWarn : (msg, text, user) => { 
+    sendEmbedMute : (msg, text, user) => { 
         let img = "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1485780423/59c00337c0b0a3d3d99a20e7a1a152d6_XL_yvv5q5.jpg"
         const embed = new MessageEmbed()
             .setColor(color.danger)
             .setTitle(user + " has beed muted")
             .setImage(img)
+            .setFooter("Virtual On Comunity | " + getTime())
             .setDescription("reason : " + text)
         return embed
     },
@@ -57,7 +75,49 @@ VOC's Channels
             .setTitle("Selamat datang di VOC" + user.user.username)
             .setDescription(desc)
             .setThumbnail(profile_pict)
+            .setFooter("Virtual On Comunity | " + getTime())
             .setImage(img)
         return embed
-    }
+    },
+
+    sendEmbedPict : (msg, img_url) => { 
+        let img = img_url
+        const embed = new MessageEmbed()
+            .setColor(color.primary)
+            .setImage(img)
+            .setFooter("Virtual On Comunity | " + getTime())
+        return embed
+    },
+
+    sendEmbedError : (msg, error) => { 
+        let desc = `
+Please contact <@${roles.admin}>
+Errors : ${error}
+`
+        const embed = new MessageEmbed()
+            .setColor(color.danger)
+            .setTitle("Bot Error")
+            .setDescription(desc)
+            .setThumbnail("https://thumbs.dreamstime.com/z/warning-sign-danger-icon-rectangle-triangle-frame-yellow-black-color-background-153908978.jpg")
+            .setImage(gif.garis)
+            .setFooter("Virtual On Comunity | " + getTime())
+        return embed
+    },
+
+    sendEmbedText : (msg, text) => { 
+        const embed = new MessageEmbed()
+            .setColor(color.primary)
+            .setImage(gif.garis)
+            .setDescription(text)
+            .setFooter("Virtual On Comunity | " + getTime())
+        return embed
+    },
+
+    getAvatarUrl : async (bot,userId) => {
+        let user = await bot.fetchUser(userId)
+        return user.avatarURL
+    },
+
+
+
 }

@@ -1,4 +1,4 @@
-const { isAdmin,sendEmbedWarn } = require('../utils/utils')
+const { isAdmin,sendEmbedMute,sendEmbedError,sendEmbedText } = require('../utils/utils')
 
 module.exports.run = async (bot, message, args) => {
     try {
@@ -11,10 +11,12 @@ module.exports.run = async (bot, message, args) => {
         const guild = bot.guilds.cache.get(server.id);
         let member = guild.members.cache.get(user.user.id)
         await member.roles.remove(mutedRole)
-        await message.channel.send( user.user.username + " has been unmuted")
+        const embed = sendEmbedText(message,`<@user.user.id> has been unmute`)
+        await message.channel.send({embeds:[embed]})
 
     } catch (error) {
-        message.channel.send("Error found, please contact Admin : " + error)
+        const error_embed = await sendEmbedError(message,error)
+        message.channel.send({embeds:[error_embed]})
         throw error
     }
 }
