@@ -6,7 +6,7 @@ async function guildMemberAdd(member, bot) {
 
     //Find a channel named welcome and send a Welcome message
     const newEmbed = await sendEmbedWelcome(bot,member)
-    const newEmbed2 = await sendEmbedWelcome2(bot,member)
+    const newEmbed2 = await sendEmbedWelcome2(bot,member,bot)
     bot.channels.cache.find(c => c.id === "834302027105435689").send("<@" + member.user.id + ">")
     bot.channels.cache.find(c => c.id === "834302027105435689").send({embed:newEmbed2})
     bot.channels.cache.find(c => c.id === "728580912790372365").send("<@" + member.user.id + ">")

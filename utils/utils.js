@@ -6,7 +6,8 @@ const color = {
 }
 
 const roles = {
-    admin : "728761025339457546"
+    admin : "728761025339457546",
+    moderator : "925020983251857428",
 }
 
 const gif = {
@@ -18,14 +19,14 @@ function getTime() {
   var s = d.getSeconds();
   var m = d.getMinutes();
   var h = d.getHours();
-  return h + ":" + m + ":" + s;
+  return h + ":" + m;
 }
 
 
 module.exports = {
     isAdmin : (msg) => {
         const adminRole = roles.admin
-        if (msg.member.roles.cache.has(adminRole)){
+        if (msg.member.roles.cache.has(adminRole) || msg.member.roles.cache.has(roles.moderator)){
             return true
         }else{
             return false
@@ -55,7 +56,7 @@ Harap membaca <#811955187554975794> dan juga membaca <#905813596817195029>
             .setDescription(desc)
         return embed
     },
-    sendEmbedWelcome2 : async (msg,user) => {
+    sendEmbedWelcome2 : async (msg,user,bot) => {
         // <#channelID>
         let img = "https://cdn.discordapp.com/attachments/811955187554975795/928277893132484648/welcome_to_voc.png"
         let desc = `
@@ -69,10 +70,12 @@ VOC's Channels
 <#825965256281948170> : Berbicara tentang game
         `;
 
-        let profile_pict = await user.user.avatarURL == null ? user.user.avatarURL() : user.user.avatarURL
+        let profile_pict = await bot.users.fetch(user.user.id).then(user => {
+            return user.avatarURL()
+        })        
         const embed = new MessageEmbed()
             .setColor(color.primary)
-            .setTitle("Selamat datang di VOC" + user.user.username)
+            .setTitle("Selamat datang di VOC " + user.user.username)
             .setDescription(desc)
             .setThumbnail(profile_pict)
             .setFooter("Virtual On Comunity | " + getTime())
@@ -111,6 +114,26 @@ Errors : ${error}
             .setFooter("Virtual On Comunity | " + getTime())
         return embed
     },
+
+    sendEmbedBye : async (msg,user,bot) => {
+        // <#channelID>
+        let img = "https://cdn.discordapp.com/attachments/838318045532258314/928604870875951124/good_bye_voc.png"
+        let desc = `
+Pribumi ${user.user.username} telah meninggal :Menghadeh: 
+        `;
+
+        let profile_pict = await bot.users.fetch(user.user.id).then(user => {
+            return user.avatarURL()
+        })
+        const embed = new MessageEmbed()
+            .setColor(color.danger)
+            .setTitle("Selamat tinggal " + user.user.username)
+            .setDescription(desc)
+            .setThumbnail(profile_pict)
+            .setFooter("Virtual On Comunity | " + getTime())
+            .setImage(img)
+        return embed
+    }
 
     getAvatarUrl : async (bot,userId) => {
         let user = await bot.fetchUser(userId)
