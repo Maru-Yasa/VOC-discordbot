@@ -6,7 +6,7 @@ async function guildMemberRemove(member, bot) {
 
     //Find a channel named welcome and send a Welcome message
     const newEmbed = await sendEmbedBye(bot,member,bot)
-    bot.channels.cache.find(c => c.id === "728580912790372365").send({embed:newEmbed})
+    bot.channels.cache.find(c => c.id === "928607228632662036").send({embed:newEmbed})
 }
 
 module.exports = {
