@@ -133,7 +133,7 @@ Pribumi ${user.user.username} telah meninggal :Menghadeh:
             .setFooter("Virtual On Comunity | " + getTime())
             .setImage(img)
         return embed
-    }
+    },
 
     getAvatarUrl : async (bot,userId) => {
         let user = await bot.fetchUser(userId)
